@@ -38,15 +38,18 @@ class _SubcategoryState extends State<Subcategory> {
                   fit: BoxFit.cover,
                   height: 150,
                 ),
-                title: Text(
-                  category.name,
-                  textAlign: TextAlign.end,
-                  // overflow: TextOverflow.fade,
-                  style: TextStyle(
-                      color: Colors.grey[100],
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15.0,
-                      letterSpacing: 2.0),
+                title: SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    category.name,
+                    textAlign: TextAlign.end,
+                    // overflow: TextOverflow.fade,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15.0,
+                        letterSpacing: 2.0),
+                  ),
                 ),
                 centerTitle: false,
               ),
@@ -87,32 +90,27 @@ class _SubcategoryState extends State<Subcategory> {
     return SliverToBoxAdapter(
       child: ListView.builder(
         padding: EdgeInsets.all(0),
-        // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        //     crossAxisCount: 2,
-        //     crossAxisSpacing: 5,
-        //     childAspectRatio: 3 / 2,
-        //     mainAxisSpacing: 3),
         primary: false,
         shrinkWrap: true,
         itemCount: subCategories.length,
         itemBuilder: ((context, index) {
-          return Card(
-            margin: EdgeInsets.all(9),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            color: Colors.grey[900],
-            child: Center(
-              child: ListTile(
-                title: TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, "/paper", arguments: {
-                      "name": subCategories[index].name,
-                      "code": subCategories[index].code,
-                      "image": image
-                    });
-                  },
-                  child: Text(
+          return GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, "/paper", arguments: {
+                "name": subCategories[index].name,
+                "code": subCategories[index].code,
+                "image": image
+              });
+            },
+            child: Card(
+              margin: EdgeInsets.all(9),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              color: Colors.grey[900],
+              child: Center(
+                child: ListTile(
+                  title: Text(
                     subCategories[index].name,
                     style: TextStyle(color: Colors.grey),
                     textAlign: TextAlign.center,

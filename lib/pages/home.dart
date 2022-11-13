@@ -34,29 +34,29 @@ class _HomeState extends State<Home> {
               child: SizedBox(
                 height: 200,
                 width: 400,
-                child: Card(
-                  clipBehavior: Clip.hardEdge,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0)),
-                  child: Stack(alignment: Alignment.center, children: [
-                    Ink.image(
-                      image: AssetImage(
-                        "assets/images/${categories[index].image}",
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, "/subcat",
+                        arguments: {"categoryIndex": index});
+                  },
+                  child: Card(
+                    clipBehavior: Clip.hardEdge,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0)),
+                    child: Stack(alignment: Alignment.center, children: [
+                      Ink.image(
+                        image: AssetImage(
+                          "assets/images/${categories[index].image}",
+                        ),
+                        height: 200,
+                        width: 400,
+                        fit: BoxFit.cover,
+                        colorFilter: ColorFilter.mode(
+                          Colors.black.withOpacity(0.5),
+                          BlendMode.saturation,
+                        ),
                       ),
-                      height: 200,
-                      width: 400,
-                      fit: BoxFit.cover,
-                      colorFilter: ColorFilter.mode(
-                        Colors.black.withOpacity(0.5),
-                        BlendMode.saturation,
-                      ),
-                    ),
-                    Center(
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, "/subcat",
-                              arguments: {"categoryIndex": index});
-                        },
+                      Center(
                         child: Text(
                           categories[index].name,
                           textAlign: TextAlign.center,
@@ -67,8 +67,8 @@ class _HomeState extends State<Home> {
                               letterSpacing: 2.0),
                         ),
                       ),
-                    ),
-                  ]),
+                    ]),
+                  ),
                 ),
               ),
             );

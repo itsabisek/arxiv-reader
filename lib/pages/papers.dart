@@ -48,9 +48,9 @@ class _PapersState extends State<Papers> {
                 ),
                 title: Text(
                   name,
-                  textAlign: TextAlign.right,
+                  textAlign: TextAlign.end,
                   style: TextStyle(
-                      color: Colors.grey[100],
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 15.0,
                       letterSpacing: 2.0),
@@ -171,7 +171,7 @@ class _PapersState extends State<Papers> {
                         ),
                         Text(
                           paperService.papers[index].title,
-                          textAlign: TextAlign.left,
+                          textAlign: TextAlign.start,
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -194,7 +194,7 @@ class _PapersState extends State<Papers> {
                     padding: const EdgeInsets.all(10.0),
                     child: Text(
                       paperService.papers[index].summary,
-                      textAlign: TextAlign.left,
+                      textAlign: TextAlign.start,
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

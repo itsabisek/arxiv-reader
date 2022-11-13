@@ -1,5 +1,6 @@
 import 'package:http/http.dart';
 import 'package:webfeed/webfeed.dart';
+import 'package:intl/intl.dart';
 
 class PaperService {
   List<Paper> papers = [];
@@ -13,20 +14,25 @@ class PaperService {
     AtomFeed data = AtomFeed.parse(response.body);
     for (AtomItem entry in data.items!) {
       try {
-        String title = entry.title as String;
-        List<AtomPerson> authorsList = entry.authors as List<AtomPerson>;
-        String summary = entry.summary as String;
-        List<AtomLink> linksList = entry.links as List<AtomLink>;
+        String title = entry.title!;
+        List<AtomPerson> authorsList = entry.authors!;
+        String summary = (entry.summary!).trim();
+        List<AtomLink> linksList = entry.links!;
+        String publishedOn =
+            DateFormat.yMMMd().format(DateTime.parse(entry.published!));
 
-        String authors = authorsList
-            .map((author) => author.name as String)
-            .toList()
-            .join(", ");
+        String authors = "";
+        int totalAuthors = authorsList.length;
+        if (totalAuthors == 1) {
+          authors = authorsList[0].name!;
+        } else {
+          authors = "${authorsList[0].name!} and ${totalAuthors - 1} others";
+        }
 
         String pdfUrl = "";
         for (AtomLink link in linksList) {
           if (link.title == "pdf") {
-            pdfUrl = link.href as String;
+            pdfUrl = link.href!;
           }
         }
         if (pdfUrl.isEmpty) {
@@ -35,7 +41,11 @@ class PaperService {
         }
 
         papers.add(Paper(
-            title: title, author: authors, summary: summary, pdfUrl: pdfUrl));
+            title: title,
+            author: authors,
+            summary: summary,
+            pdfUrl: pdfUrl,
+            publishedOn: publishedOn));
         lastFetchSuccessfull = true;
       } catch (e) {
         print("Caught $e");
@@ -47,14 +57,16 @@ class PaperService {
 }
 
 class Paper {
-  String title;
-  String summary;
-  String author;
-  String pdfUrl;
+  late String title;
+  late String summary;
+  late String author;
+  late String pdfUrl;
+  late String publishedOn;
 
   Paper(
-      {this.title = "Loading",
-      this.summary = "Loading",
-      this.author = "Loading",
-      this.pdfUrl = "Loading"});
+      {required this.title,
+      required this.summary,
+      required this.author,
+      required this.pdfUrl,
+      required this.publishedOn});
 }

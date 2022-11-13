@@ -35,13 +35,15 @@ class _SubcategoryState extends State<Subcategory> {
                 ),
                 title: Text(
                   category.name,
+                  textAlign: TextAlign.right,
+                  // overflow: TextOverflow.fade,
                   style: TextStyle(
                       color: Colors.grey[100],
                       fontWeight: FontWeight.bold,
-                      fontSize: 20.0,
+                      fontSize: 15.0,
                       letterSpacing: 2.0),
                 ),
-                centerTitle: true,
+                centerTitle: false,
               ),
             ),
             SliverToBoxAdapter(

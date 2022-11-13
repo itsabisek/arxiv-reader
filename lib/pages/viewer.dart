@@ -13,7 +13,6 @@ class _ViewerState extends State<Viewer> {
   Widget build(BuildContext context) {
     Map args = ModalRoute.of(context)?.settings.arguments as Map;
     String pdfUrl = args["pdfUrl"];
-    print(pdfUrl);
 
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.grey[600], toolbarHeight: 50),

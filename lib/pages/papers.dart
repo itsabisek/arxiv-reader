@@ -15,10 +15,7 @@ class _PapersState extends State<Papers> {
 
   Future<void> getPapers(String code) async {
     try {
-      print("Started");
-      print(code);
       await paperService.getPapers(code, searchQuery);
-      print("reached!");
     } catch (e) {
       print("caught $e");
     }
@@ -47,13 +44,14 @@ class _PapersState extends State<Papers> {
                 ),
                 title: Text(
                   name,
+                  textAlign: TextAlign.right,
                   style: TextStyle(
                       color: Colors.grey[100],
                       fontWeight: FontWeight.bold,
-                      fontSize: 20.0,
+                      fontSize: 15.0,
                       letterSpacing: 2.0),
                 ),
-                centerTitle: true,
+                centerTitle: false,
               ),
             ),
             SliverToBoxAdapter(
@@ -103,7 +101,7 @@ class _PapersState extends State<Papers> {
           return Padding(
             padding: EdgeInsets.all(90),
             child: SpinKitRing(
-              color: Colors.white,
+              color: Colors.grey.shade500,
               size: 50.0,
             ),
           );
@@ -135,43 +133,72 @@ class _PapersState extends State<Papers> {
         shrinkWrap: true,
         itemCount: paperService.papers.length,
         itemBuilder: ((context, index) {
-          return Card(
-            margin: EdgeInsets.all(9),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            color: Colors.grey[900],
-            // color: Colors.black12,
-            child: Padding(
-              padding: EdgeInsets.all(5.0),
-              child: Column(children: [
-                Text(
-                  paperService.papers[index].author,
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w100,
-                      letterSpacing: 1.0),
+          return GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, "/viewer",
+                  arguments: {"pdfUrl": paperService.papers[index].pdfUrl});
+            },
+            child: Card(
+              margin: EdgeInsets.all(10),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              color: Colors.grey[900],
+              // color: Colors.black12,
+              child: ExpansionTile(
+                collapsedIconColor: Colors.grey[500],
+                iconColor: Colors.white,
+                tilePadding: EdgeInsets.all(8),
+                title: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          paperService.papers[index].author,
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w100,
+                              letterSpacing: 1.0),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          paperService.papers[index].title,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1.0),
+                        )
+                      ]),
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, "/viewer", arguments: {
-                      "pdfUrl": paperService.papers[index].pdfUrl
-                    });
-                  },
-                  child: Text(
-                    paperService.papers[index].title,
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1.0),
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      paperService.papers[index].publishedOn,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1.0),
+                    ),
                   ),
-                )
-              ]),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      paperService.papers[index].summary,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1.0),
+                    ),
+                  )
+                ],
+              ),
             ),
           );
         }));

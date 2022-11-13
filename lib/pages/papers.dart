@@ -26,6 +26,7 @@ class _PapersState extends State<Papers> {
     Map args = ModalRoute.of(context)?.settings.arguments as Map;
     String code = args["code"];
     String name = args["name"];
+    String image = args["image"];
 
     return Scaffold(
         backgroundColor: Colors.grey[850],
@@ -38,9 +39,12 @@ class _PapersState extends State<Papers> {
               floating: true,
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
-                background: Image.asset(
-                  "assets/images/1.jpg",
+                background: Ink.image(
+                  image: AssetImage(
+                    "assets/images/$image",
+                  ),
                   fit: BoxFit.cover,
+                  height: 150,
                 ),
                 title: Text(
                   name,

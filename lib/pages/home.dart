@@ -46,6 +46,10 @@ class _HomeState extends State<Home> {
                       height: 200,
                       width: 400,
                       fit: BoxFit.cover,
+                      colorFilter: ColorFilter.mode(
+                        Colors.black.withOpacity(0.5),
+                        BlendMode.saturation,
+                      ),
                     ),
                     Center(
                       child: TextButton(

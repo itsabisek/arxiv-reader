@@ -9,11 +9,13 @@ class Subcategory extends StatefulWidget {
 
 class _SubcategoryState extends State<Subcategory> {
   List<SubCategory> filteredSubcategories = [];
+  late String image;
 
   @override
   Widget build(BuildContext context) {
     Map data = ModalRoute.of(context)?.settings.arguments as Map;
     Category category = Categories.categories[data["categoryIndex"]];
+    image = category.image;
     List<SubCategory> subcategories = filteredSubcategories.isEmpty
         ? category.subcategories
         : filteredSubcategories;
@@ -29,13 +31,16 @@ class _SubcategoryState extends State<Subcategory> {
               floating: true,
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
-                background: Image.asset(
-                  "assets/images/1.jpg",
+                background: Ink.image(
+                  image: AssetImage(
+                    "assets/images/$image",
+                  ),
                   fit: BoxFit.cover,
+                  height: 150,
                 ),
                 title: Text(
                   category.name,
-                  textAlign: TextAlign.right,
+                  textAlign: TextAlign.end,
                   // overflow: TextOverflow.fade,
                   style: TextStyle(
                       color: Colors.grey[100],
@@ -103,7 +108,8 @@ class _SubcategoryState extends State<Subcategory> {
                   onPressed: () {
                     Navigator.pushNamed(context, "/paper", arguments: {
                       "name": subCategories[index].name,
-                      "code": subCategories[index].code
+                      "code": subCategories[index].code,
+                      "image": image
                     });
                   },
                   child: Text(

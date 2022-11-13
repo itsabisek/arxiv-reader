@@ -14,9 +14,9 @@ class PaperService {
     AtomFeed data = AtomFeed.parse(response.body);
     for (AtomItem entry in data.items!) {
       try {
-        String title = entry.title!;
+        String title = entry.title!.trim().replaceAll("  ", "");
         List<AtomPerson> authorsList = entry.authors!;
-        String summary = (entry.summary!).trim();
+        String summary = (entry.summary!).trim().replaceAll("  ", "");
         List<AtomLink> linksList = entry.links!;
         String publishedOn =
             DateFormat.yMMMd().format(DateTime.parse(entry.published!));

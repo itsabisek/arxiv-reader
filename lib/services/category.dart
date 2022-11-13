@@ -1,6 +1,6 @@
 class Categories {
   static List<Category> categories = [
-    Category(name: "Computer Science", subcategories: [
+    Category(name: "Computer Science", image: "cs.jpg", subcategories: [
       SubCategory(name: "Artificial Intelligence", code: "cs.AI"),
       SubCategory(name: "Hardware Architecture", code: "cs.AR"),
       SubCategory(name: "Computational Complexity", code: "cs.CC"),
@@ -46,20 +46,21 @@ class Categories {
       SubCategory(name: "Social and Information Networks", code: "cs.SI"),
       SubCategory(name: "Systems and Control", code: "cs.SY"),
     ]),
-    Category(name: "Economics", subcategories: [
+    Category(name: "Economics", image: "econ.jpg", subcategories: [
       SubCategory(name: "Econometrics", code: "econ.EM"),
       SubCategory(name: "General Economics", code: "econ.GN"),
       SubCategory(name: "Theoretical Economics", code: "econ.TH"),
     ]),
     Category(
         name: "Electrical Engineering and Systems Science",
+        image: "eess.jpg",
         subcategories: [
           SubCategory(name: "Audio and Speech Processing", code: "eess.AS"),
           SubCategory(name: "Image and Video Processing", code: "eess.IV"),
           SubCategory(name: "Signal Processing", code: "eess.SP"),
           SubCategory(name: "Systems and Control", code: "eess.SY"),
         ]),
-    Category(name: "Mathematics", subcategories: [
+    Category(name: "Mathematics", image: "math.jpg", subcategories: [
       SubCategory(name: "Commutative Algebra", code: "math.AC"),
       SubCategory(name: "Algebraic Geometry", code: "math.AG"),
       SubCategory(name: "Analysis of PDEs", code: "math.AP"),
@@ -93,7 +94,7 @@ class Categories {
       SubCategory(name: "Spectral Theory", code: "math.SP"),
       SubCategory(name: "Statistics Theory", code: "math.ST"),
     ]),
-    Category(name: "Quantitative Biology", subcategories: [
+    Category(name: "Quantitative Biology", image: "bio.jpg", subcategories: [
       SubCategory(name: "Biomolecules", code: "q-bio.BM"),
       SubCategory(name: "Cell Behavior", code: "q-bio.CB"),
       SubCategory(name: "Genomics", code: "q-bio.GN"),
@@ -105,7 +106,7 @@ class Categories {
       SubCategory(name: "Subcellular Processes", code: "q-bio.SC"),
       SubCategory(name: "Tissues and Organs", code: "q-bio.TO"),
     ]),
-    Category(name: "Quantitative Finance", subcategories: [
+    Category(name: "Quantitative Finance", image: "fin.jpg", subcategories: [
       SubCategory(name: "Computational Finance", code: "q-fin.CP"),
       SubCategory(name: "Economics", code: "q-fin.EC"),
       SubCategory(name: "General Finance", code: "q-fin.GN"),
@@ -116,7 +117,7 @@ class Categories {
       SubCategory(name: "Statistical Finance", code: "q-fin.ST"),
       SubCategory(name: "Trading and Market Microstructure", code: "q-fin.TR"),
     ]),
-    Category(name: "Statistics", subcategories: [
+    Category(name: "Statistics", image: "stat.jpg", subcategories: [
       SubCategory(name: "Applications", code: "stat.AP"),
       SubCategory(name: "Computation", code: "stat.CO"),
       SubCategory(name: "Methodology", code: "stat.ME"),
@@ -129,10 +130,12 @@ class Categories {
 
 class Category {
   String name;
+  String image;
 
   List<SubCategory> subcategories;
 
-  Category({required this.name, required this.subcategories});
+  Category(
+      {required this.name, required this.subcategories, required this.image});
 }
 
 class SubCategory {

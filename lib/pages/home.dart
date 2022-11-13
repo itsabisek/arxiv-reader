@@ -31,30 +31,41 @@ class _HomeState extends State<Home> {
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.all(5.0),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0)),
-                clipBehavior: Clip.hardEdge,
-                child: Stack(alignment: Alignment.center, children: [
-                  Image.asset("assets/images/1.jpg"),
-                  Center(
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, "/subcat",
-                            arguments: {"categoryIndex": index});
-                      },
-                      child: Text(
-                        categories[index].name,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.grey[100],
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22.0,
-                            letterSpacing: 1.0),
+              child: SizedBox(
+                height: 200,
+                width: 400,
+                child: Card(
+                  clipBehavior: Clip.hardEdge,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0)),
+                  child: Stack(alignment: Alignment.center, children: [
+                    Ink.image(
+                      image: AssetImage(
+                        "assets/images/${categories[index].image}",
+                      ),
+                      height: 200,
+                      width: 400,
+                      fit: BoxFit.cover,
+                    ),
+                    Center(
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/subcat",
+                              arguments: {"categoryIndex": index});
+                        },
+                        child: Text(
+                          categories[index].name,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22.0,
+                              letterSpacing: 2.0),
+                        ),
                       ),
                     ),
-                  ),
-                ]),
+                  ]),
+                ),
               ),
             );
           },

@@ -1,78 +1,119 @@
 import 'package:arxiv_reader/services/category.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Subcategory extends StatelessWidget {
-  final List<String> categories = [
-    "Computer Science",
-    "Economics",
-    "Electrical Engineering and Systems Science",
-    "Mathematics",
-    "Physics",
-    "Quantitative Biology",
-    "Quantitative Finance",
-    "Statistics",
-  ];
+class Subcategory extends StatefulWidget {
+  @override
+  State<Subcategory> createState() => _SubcategoryState();
+}
+
+class _SubcategoryState extends State<Subcategory> {
+  List<SubCategory> filteredSubcategories = [];
 
   @override
   Widget build(BuildContext context) {
     Map data = ModalRoute.of(context)?.settings.arguments as Map;
     Category category = Categories.categories[data["categoryIndex"]];
+    List<SubCategory> subcategories = filteredSubcategories.isEmpty
+        ? category.subcategories
+        : filteredSubcategories;
 
     return Scaffold(
-      backgroundColor: Colors.grey[850],
-      body: Column(
-        children: [
-          Stack(alignment: Alignment.center, children: [
-            Image.asset("assets/images/1.jpg"),
-            Center(
-              child: Text(
-                category.name,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Colors.grey[100],
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22.0,
-                    letterSpacing: 1.0),
+        backgroundColor: Colors.grey[850],
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              backgroundColor: Colors.grey[900],
+              elevation: 0,
+              expandedHeight: 150,
+              floating: true,
+              pinned: true,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Image.asset(
+                  "assets/images/1.jpg",
+                  fit: BoxFit.cover,
+                ),
+                title: Text(
+                  category.name,
+                  style: TextStyle(
+                      color: Colors.grey[100],
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20.0,
+                      letterSpacing: 2.0),
+                ),
+                centerTitle: true,
               ),
             ),
-          ]),
-          Expanded(
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, crossAxisSpacing: 16),
-              itemCount: category.subcategories.length,
-              itemBuilder: ((context, index) {
-                return Container(
-                  padding: const EdgeInsets.all(8.0),
-                  height: 190.0,
-                  width: 190.0,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    color: Colors.black12,
-                    child: Center(
-                      child: ListTile(
-                        title: TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, "/paper", arguments: {
-                              "code": category.subcategories[index].code
-                            });
-                          },
-                          child: Text(
-                            category.subcategories[index].name,
-                            style: TextStyle(color: Colors.grey),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              }),
+            SliverToBoxAdapter(
+              child: const SizedBox(
+                height: 5,
+              ),
             ),
-          )
-        ],
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: CupertinoSearchTextField(
+                  backgroundColor: Colors.grey[500],
+                  borderRadius: BorderRadius.circular(10.0),
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      setState(() {
+                        filteredSubcategories = category.subcategories
+                            .where((e) => e.name.toLowerCase().contains(value))
+                            .toList();
+                      });
+                    } else {
+                      setState(() {
+                        filteredSubcategories = [];
+                      });
+                    }
+                  },
+                ),
+              ),
+            ),
+            buildList(subcategories)
+          ],
+        ));
+  }
+
+  Widget buildList(List<SubCategory> subCategories) {
+    return SliverToBoxAdapter(
+      child: ListView.builder(
+        padding: EdgeInsets.all(0),
+        // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        //     crossAxisCount: 2,
+        //     crossAxisSpacing: 5,
+        //     childAspectRatio: 3 / 2,
+        //     mainAxisSpacing: 3),
+        primary: false,
+        shrinkWrap: true,
+        itemCount: subCategories.length,
+        itemBuilder: ((context, index) {
+          return Card(
+            margin: EdgeInsets.all(9),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            color: Colors.grey[900],
+            child: Center(
+              child: ListTile(
+                title: TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/paper", arguments: {
+                      "name": subCategories[index].name,
+                      "code": subCategories[index].code
+                    });
+                  },
+                  child: Text(
+                    subCategories[index].name,
+                    style: TextStyle(color: Colors.grey),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ),
+          );
+        }),
       ),
     );
   }

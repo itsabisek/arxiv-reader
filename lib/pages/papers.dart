@@ -46,14 +46,17 @@ class _PapersState extends State<Papers> {
                   fit: BoxFit.cover,
                   height: 150,
                 ),
-                title: Text(
-                  name,
-                  textAlign: TextAlign.end,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15.0,
-                      letterSpacing: 2.0),
+                title: SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    name,
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15.0,
+                        letterSpacing: 2.0),
+                  ),
                 ),
                 centerTitle: false,
               ),

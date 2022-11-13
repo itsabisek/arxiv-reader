@@ -26,7 +26,7 @@ class PaperService {
         if (totalAuthors == 1) {
           authors = authorsList[0].name!;
         } else {
-          authors = "${authorsList[0].name!} and ${totalAuthors - 1} others";
+          authors = "${authorsList[0].name!} et al.";
         }
 
         String pdfUrl = "";

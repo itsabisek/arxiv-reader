@@ -167,6 +167,7 @@ class _PapersState extends State<Papers> {
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w100,
+                              fontStyle: FontStyle.italic,
                               letterSpacing: 1.0),
                         ),
                         const SizedBox(

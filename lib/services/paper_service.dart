@@ -10,7 +10,7 @@ class PaperService {
     papers = [];
     String search = searchQuery.isNotEmpty ? "+AND+all:$searchQuery" : "";
     Response response = await get(Uri.parse(
-        "https://export.arxiv.org/api/query?search_query=cat:$code$search&sortBy=lastUpdatedDate&sortOrder=descending"));
+        "https://export.arxiv.org/api/query?search_query=cat:$code$search&sortBy=lastUpdatedDate&sortOrder=descending&max_results=20"));
     AtomFeed data = AtomFeed.parse(response.body);
     for (AtomItem entry in data.items!) {
       try {
